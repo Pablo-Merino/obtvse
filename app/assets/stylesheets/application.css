@@ -12,3 +12,20 @@
  *= require_self
  *= require_tree .
 */
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+input.input {
+	border:none;
+	width:104.1%;
+	font-size: 25px;
+	margin-left:-50px;
+}
+input.first {
+	border-top:1px solid #DDD;
+}
+
+input.input {
+	border-bottom:1px solid #DDD;
+}

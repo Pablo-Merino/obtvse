@@ -1,27 +1,40 @@
-class Post < ActiveRecord::Base
-  validates :title, presence: true
-  validates :slug, presence: true, uniqueness: true
-  acts_as_url :title, :url_attribute => :slug
+class Post
 
-  default_scope order('created_at desc')
+	include Mongoid::Document
+	include Mongoid::Timestamps
 
-  def to_param
-    slug
-  end
+	field :title, type: String
+	field :content, type: String
+	field :url, type: String
+	field :draft, type: Boolean
+	field :slug, type: String
 
-  def external?
-  	!url.blank?
-  end
+	validates_presence_of :title
 
-  def has_more_tag
-    content =~ /<!--\s*more\s*-->/i ? true : false
-  end
+	default_scope order_by(:created_at => :desc)
 
-  def excerpt
-    if content.index(/<!--\s*more\s*-->/i)
-      content.split(/<!--\s*more\s*-->/i)[0]
-    else
-      content
-    end
-  end
+	before_save :gen_slug
+
+	def gen_slug
+		self.slug = self.title.downcase.gsub(/'/, '').gsub(/[^a-z0-9]+/, '-') do |slug|
+			slug.chop! if slug.last == '-'
+		end
+	end
+
+	def external?
+		!url.blank?
+	end
+
+	def has_more_tag
+		content =~ /<!--\s*more\s*-->/i ? true : false
+	end
+
+	def excerpt
+		if content.index(/<!--\s*more\s*-->/i)
+			content.split(/<!--\s*more\s*-->/i)[0]
+		else
+			content
+		end
+	end
 end
+

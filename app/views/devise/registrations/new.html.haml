@@ -1,0 +1,11 @@
+%section
+	%h2 Sign up
+	= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+		= devise_error_messages!
+		%div
+			= f.email_field :email, :class => "input first", :placeholder => 'E-mail'
+		%div
+			= f.password_field :password, :class => "input", :placeholder => 'Password'
+		%div
+			= f.password_field :password_confirmation, :class => "input", :placeholder => 'Password Confirmation'
+		%div= f.submit "Sign up", :class => "button space-top"

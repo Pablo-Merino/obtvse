@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
-  before_filter :authenticate, :except => [:index, :show]
+  before_filter :authenticate_user!, :except => [:index, :show]
   layout :choose_layout
 
   def index
-    @posts = Post.page(params[:page]).per(10).where(draft:false)
+    @posts = Post.page(params[:page]).per(3).where(draft:false)
 
     respond_to do |format|
       format.html
@@ -33,7 +33,7 @@ class PostsController < ApplicationController
 
   def show
     @single_post = true
-    @post = admin? ? Post.find_by_slug(params[:slug]) : Post.find_by_slug_and_draft(params[:slug],false)
+    @post = admin? ? Post.find_by(slug: params[:slug]) : Post.find_by(slug: params[:slug],draft: false)
 
     respond_to do |format|
       if @post.present?
@@ -76,7 +76,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find_by_slug(params[:slug])
+    @post = Post.find(params[:slug])
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
@@ -90,7 +90,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find_by_slug(params[:slug])
+    @post = Post.find(params[:slug])
     @post.destroy
 
     respond_to do |format|

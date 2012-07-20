@@ -13,13 +13,12 @@ gem 'redcarpet'
 # gem 'bcrypt-ruby', '~> 3', require: 'bcrypt'
 gem 'stringex', '~> 1', git: 'git://github.com/rsl/stringex.git'
 gem 'kaminari', '~> 0.13'
-
-group :production do
-  # gem 'newrelic_rpm', '~> 3'
-  # gem 'dalli', '~> 1'
-  gem 'pg', '~> 0.13'
-end
-
+gem 'mongoid', "~> 3.0.0.rc"
+gem "bson_ext"
+gem 'mongoid_slug', :git => "git://github.com/Pablo-Merino/mongoid-slug.git"
+gem 'haml'
+gem 'haml-rails'
+gem 'devise'
 group :development do
   # gem 'heroku', '~> 2'
   # gem 'capistrano', '~> 2.9'
@@ -37,7 +36,6 @@ end
 
 group :development, :test do
   gem 'foreman', '~> 0.40'
-  gem 'sqlite3', '~> 1', platform: [:ruby, :mswin, :mingw]
   gem 'faker', '~> 1'
   gem 'factory_girl_rails', '~> 1'
 end

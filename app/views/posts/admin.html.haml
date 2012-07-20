@@ -1,0 +1,14 @@
+#drafts.col
+  %h1
+    Drafts #{link_to 'New Draft', '/new', :class => 'button'}
+  = form_for @post do |f|
+    = f.text_field :title, :placeholder => 'Start typing your title here...'
+  %ul
+    = render :partial => 'li', :collection => @drafts
+  = paginate @drafts, :param_name => "draft_page"
+#published.col
+  %h2
+    Published #{link_to 'Home', root_url, :class => 'button'}
+  %ul
+    = render :partial => 'li', :collection => @published
+  = paginate @published, :param_name => "post_page"

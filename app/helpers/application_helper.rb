@@ -1,6 +1,6 @@
 module ApplicationHelper
   def is_admin?
-    true if session[:admin] == true
+    user_signed_in?
   end
 
   def markdown(text)
